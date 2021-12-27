@@ -1,0 +1,35 @@
+name: ${project.build.finalName}
+main: com.i0dev.PlayerStats.Heart
+version: ${project.version}
+author: i01
+description: Logs and keeps track of player statistics.
+website: ${project.url}
+softdepend:
+  - PlaceHolderAPI
+depend: []
+commands:
+  PlayerStats:
+    aliases:
+      - playerstatistics
+    description: The main command for ${project.build.finalName}
+    usage: /PlayerStats <help/reload>
+  Stats:
+    aliases:
+      - stat
+    description: The stats command.
+    usage: /Stats [player]
+  Leaderboard:
+    aliases:
+      - lb
+      - statsleaderboard
+      - statslb
+      - statlb
+    description: The leaderboard command
+    usage: /Leaderboard <stat>
+permissions:
+  PlayerStats.reload.cmd:
+    description: Reload config
+    default: op
+  PlayerStats.save.cmd:
+    description: Force saves the stats
+    default: op
