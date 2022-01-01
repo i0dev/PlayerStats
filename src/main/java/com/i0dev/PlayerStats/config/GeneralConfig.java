@@ -181,6 +181,20 @@ public class GeneralConfig extends AbstractConfiguration {
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWU5OWRlZWY5MTlkYjY2YWMyYmQyOGQ2MzAyNzU2Y2NkNTdjN2Y4YjEyYjlkY2E4ZjQxYzNlMGEwNGFjMWNjIn19fQ=="
     );
 
+    IndexableSkullConfigItem stats_skull_map_points = new IndexableSkullConfigItem(
+            "&6&lMap Points",
+            1,
+            (short) 0,
+            "SKULL_ITEM",
+            Arrays.asList(
+                    "",
+                    "&c{player} &7has &a{amount} &7map points!"
+            ),
+            true,
+            8,
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmMxZTczMDIzMzUyY2JjNzdiODk2ZmU3ZWEyNDJiNDMxNDNlMDEzYmVjNWJmMzE0ZDQxZTVmMjY1NDhmYjJkMiJ9fX0="
+    );
+
 
     ConfigItem stats_item_border = new ConfigItem(
             "&f",

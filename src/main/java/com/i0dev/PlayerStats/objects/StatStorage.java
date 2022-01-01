@@ -22,5 +22,6 @@ public class StatStorage {
             fish_caught = 0,
             blocks_broken = 0,
             blocks_placed = 0,
-            bats_killed = 0;
+            bats_killed = 0,
+            map_points = 0;
 }

@@ -143,6 +143,21 @@
         </dependency>
 
         <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>mappoints</groupId>
+            <artifactId>mappoints</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../../../../Dependencies/MapPoints.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>koth</groupId>
             <artifactId>koth</artifactId>
             <version>1</version>
@@ -157,5 +172,6 @@
             <scope>system</scope>
             <systemPath>${basedir}/../../../../Dependencies/Tokens-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
+
     </dependencies>
 </project>

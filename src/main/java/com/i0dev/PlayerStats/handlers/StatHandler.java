@@ -1,6 +1,9 @@
 package com.i0dev.PlayerStats.handlers;
 
 import com.i0dev.PlayerStats.Heart;
+import com.i0dev.PlayerStats.hooks.i0devMapPointsHook;
+import com.i0dev.PlayerStats.hooks.JosephKothHook;
+import com.i0dev.PlayerStats.hooks.JosephTokensHook;
 import com.i0dev.PlayerStats.managers.StatManager;
 import com.i0dev.PlayerStats.objects.StatTye;
 import com.i0dev.PlayerStats.objects.StatsInventoryHolder;
@@ -23,8 +26,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitTask;
-import org.jdgames.koth.entity.MPlayer;
-import org.jdgames.koth.entity.MPlayerColl;
+
+import java.util.UUID;
 
 public class StatHandler extends AbstractListener {
     public StatHandler(Heart heart) {
@@ -37,7 +40,7 @@ public class StatHandler extends AbstractListener {
 
     @Override
     public void initialize() {
-        bukkitTaskExternal = Bukkit.getScheduler().runTaskTimerAsynchronously(heart, updateExternalStatistics, (60 * 20L), 10 * (60 * 20L));
+        bukkitTaskExternal = Bukkit.getScheduler().runTaskTimerAsynchronously(heart, updateExternalStatistics, (10 * 20L), 10 * (60 * 20L));
         statManager = heart.getManager(StatManager.class);
     }
 
@@ -55,16 +58,28 @@ public class StatHandler extends AbstractListener {
         Bukkit.getOnlinePlayers().forEach(player -> statManager.setStat(player.getUniqueId(), StatTye.TIME_CONNECTED, player.getStatistic(Statistic.PLAY_ONE_TICK) / 20));
 
         // Koth
-        for (MPlayer mPlayer : MPlayerColl.get().getAll()) {
-            if (mPlayer == null || mPlayer.getUuid() == null) continue;
-            statManager.setStat(mPlayer.getUuid(), StatTye.KOTHS_CAPTURED, mPlayer.getKothWins());
+        if (Heart.usingJosephKoTH) {
+            for (UUID uuid : JosephKothHook.getAllUUIDs()) {
+                statManager.setStat(uuid, StatTye.KOTHS_CAPTURED, JosephKothHook.getKothWins(uuid));
+            }
         }
         // Cane
-        for (gg.halcyon.tokens.entity.MPlayer mPlayer : gg.halcyon.tokens.entity.MPlayerColl.get().getAll()) {
-            if (mPlayer == null || mPlayer.getUuid() == null) continue;
-            statManager.setStat(mPlayer.getUuid(), StatTye.CANE_BROKEN, mPlayer.getCaneBroken());
+        if (Heart.usingJosephTokens) {
+            for (UUID uuid : JosephTokensHook.getAllUUIDs()) {
+                statManager.setStat(uuid, StatTye.CANE_BROKEN, JosephTokensHook.getCaneBroken(uuid));
+            }
         }
-
+        System.out.println("hit");
+        // Map Points
+        try {
+            if (Heart.usingEmberMapPoints) {
+                for (UUID uuid : i0devMapPointsHook.getAllUUIDs()) {
+                    statManager.setStat(uuid, StatTye.MAP_POINTS, i0devMapPointsHook.getMapPoints(uuid));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     };
 
     @EventHandler
@@ -83,15 +98,16 @@ public class StatHandler extends AbstractListener {
     }
 
 
-//    @EventHandler(priority = EventPriority.MONITOR)
-//    public void onCaneBreak(BlockBreakEvent e) {
-//        Block block = e.getBlock();
-//        if (block == null || block.getType() == null) return;
-//        statManager.increaseStat(e.getPlayer().getUniqueId(), StatTye.BLOCKS_BROKEN, 1);
-//        if (Material.SUGAR_CANE.equals(block.getType()) || Material.SUGAR_CANE_BLOCK.equals(block.getType())) {
-//            statManager.increaseStat(e.getPlayer().getUniqueId(), StatTye.CANE_BROKEN, 1);
-//        }
-//    }
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onCaneBreak(BlockBreakEvent e) {
+        if (Heart.usingJosephTokens) return;
+        Block block = e.getBlock();
+        if (block == null || block.getType() == null) return;
+        statManager.increaseStat(e.getPlayer().getUniqueId(), StatTye.BLOCKS_BROKEN, 1);
+        if (Material.SUGAR_CANE.equals(block.getType()) || Material.SUGAR_CANE_BLOCK.equals(block.getType())) {
+            statManager.increaseStat(e.getPlayer().getUniqueId(), StatTye.CANE_BROKEN, 1);
+        }
+    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCanePlace(BlockPlaceEvent e) {

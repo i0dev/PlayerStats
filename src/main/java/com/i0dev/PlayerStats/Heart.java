@@ -36,12 +36,23 @@ public class Heart extends JavaPlugin {
     public static boolean usingPapi;
     public static boolean usingMCoreFactions;
 
+    public static boolean usingJosephKoTH;
+    public static boolean usingJosephTokens;
+    public static boolean usingEmberMapPoints;
+    public static boolean usingLuckPerms;
+
     @Override
     public void onEnable() {
 
         usingPapi = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
         Plugin factions = getServer().getPluginManager().getPlugin("Factions");
         usingMCoreFactions = factions != null && factions.getDescription().getVersion().startsWith("2.");
+        Plugin josephKoTH = getServer().getPluginManager().getPlugin("koth");
+        usingJosephKoTH = josephKoTH != null && josephKoTH.getDescription().getVersion().startsWith("1.0-SNAPSHOT");
+        Plugin josephTokens = getServer().getPluginManager().getPlugin("tokens");
+        usingJosephTokens = josephTokens != null && josephTokens.getDescription().getVersion().startsWith("1.0-SNAPSHOT");
+        usingEmberMapPoints = getServer().getPluginManager().isPluginEnabled("MapPoints");
+        usingLuckPerms = getServer().getPluginManager().isPluginEnabled("LuckPerms");
 
         managers.addAll(Arrays.asList(
                 new CmdPlayerStats(this, "PlayerStats"),

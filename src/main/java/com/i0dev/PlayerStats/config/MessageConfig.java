@@ -18,11 +18,15 @@ public class MessageConfig extends AbstractConfiguration {
     String reloadUsage = " &c* &7/PlayerStats reload";
     String helpUsage = " &c* &7/PlayerStats help";
     String statsUsage = " &c* &7/Stats [player]";
-    String leaderboardUsage = " &c* &7/Leaderboard <stat>";
+    String leaderboardUsage = " &c* &7/Leaderboard <stat> [faction]";
 
     String leaderboardHeader = "&8________&r&8[&r &7{stat} &c&lLeaderboard &8]________";
+    String factionLeaderboardHeader = "&8___&r&8[&r &7{stat} &c&lLeaderboard &7for &6{fac}&8 ]___";
     String leaderboardFormat = "{rank} &4{player} &7- &c{stat}";
     String yourPosition = "&7Your position is &f{rank}&7 with a value of &c{stat}&7.";
+
+
+    String cantFindFaction = "&cCould not find faction";
 
     String openedStats = "&7Now showing statistics for &c{player}&7.";
     String forceSaved = "&aForce saved data successfully!";

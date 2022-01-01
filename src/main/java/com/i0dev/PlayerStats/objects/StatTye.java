@@ -12,6 +12,7 @@ public enum StatTye {
     FISH_CAUGHT,
     BLOCKS_BROKEN,
     BLOCKS_PLACED,
-    BATS_KILLED
+    BATS_KILLED,
+    MAP_POINTS
 
 }

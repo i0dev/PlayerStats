@@ -22,6 +22,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -96,6 +97,9 @@ public class StatManager extends AbstractManager {
             case TIMES_DIED:
                 obj.setTimes_died(amount);
                 break;
+            case MAP_POINTS:
+                obj.setMap_points(amount);
+                break;
         }
     }
 
@@ -137,6 +141,9 @@ public class StatManager extends AbstractManager {
             case TIMES_DIED:
                 obj.setTimes_died(obj.getTimes_died() + amount);
                 break;
+            case MAP_POINTS:
+                obj.setMap_points(obj.getMap_points() + amount);
+                break;
         }
     }
 
@@ -170,8 +177,11 @@ public class StatManager extends AbstractManager {
                 cnf.getStats_skull_fish_caught(),
                 cnf.getStats_skull_blocks_broken(),
                 cnf.getStats_skull_blocks_placed(),
-                cnf.getStats_skull_bats_killed()
+                cnf.getStats_skull_bats_killed(),
+                cnf.getStats_skull_map_points()
         );
+
+        NumberFormat nf = NumberFormat.getIntegerInstance();
 
         for (int i = 0; i < items.size(); i++) {
             IndexableSkullConfigItem item = items.get(i);
@@ -179,37 +189,40 @@ public class StatManager extends AbstractManager {
             String amount = "";
             switch (i) {
                 case 0:
-                    amount = storage.getCane_broken() + "";
+                    amount = nf.format(storage.getCane_broken()) + "";
                     break;
                 case 1:
-                    amount = storage.getCane_placed() + "";
+                    amount = nf.format(storage.getCane_placed()) + "";
                     break;
                 case 2:
                     amount = Utility.formatTimePeriod(storage.getTime_connected() * 1000L);
                     break;
                 case 3:
-                    amount = storage.getKoths_captured() + "";
+                    amount = nf.format(storage.getKoths_captured()) + "";
                     break;
                 case 4:
-                    amount = storage.getPlayers_killed() + "";
+                    amount = nf.format(storage.getPlayers_killed()) + "";
                     break;
                 case 5:
-                    amount = storage.getMobs_killed() + "";
+                    amount = nf.format(storage.getMobs_killed()) + "";
                     break;
                 case 6:
-                    amount = storage.getTimes_died() + "";
+                    amount = nf.format(storage.getTimes_died()) + "";
                     break;
                 case 7:
-                    amount = storage.getFish_caught() + "";
+                    amount = nf.format(storage.getFish_caught()) + "";
                     break;
                 case 8:
-                    amount = storage.getBlocks_broken() + "";
+                    amount = nf.format(storage.getBlocks_broken()) + "";
                     break;
                 case 9:
-                    amount = storage.getBlocks_placed() + "";
+                    amount = nf.format(storage.getBlocks_placed()) + "";
                     break;
                 case 10:
-                    amount = storage.getBats_killed() + "";
+                    amount = nf.format(storage.getBats_killed()) + "";
+                    break;
+                case 11:
+                    amount = nf.format(storage.getMap_points()) + "";
                     break;
             }
 
